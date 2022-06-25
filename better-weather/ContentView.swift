@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    let color: UIColor = UIColor(red: 31/255.0,
+                                 green: 31/255.0,
+                                 blue: 31/255.0,
+                                 alpha: 1)
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+    
+        VStack {
+            ZStack {
+                ZStack {
+                    Color(color)
+                    Image("splash")
+                }.ignoresSafeArea()
+                
+            }
+        }
     }
 }
 
