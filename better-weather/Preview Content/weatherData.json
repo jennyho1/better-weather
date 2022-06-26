@@ -5,36 +5,40 @@
     },
     "weather": [
         {
-            "id": 804,
-            "main": "Clouds",
-            "description": "overcast clouds",
-            "icon": "04d"
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
         }
     ],
+    "base": "stations",
     "main": {
-        "temp": 27.92,
-        "feels_like": 28.03,
-        "temp_min": 24.56,
-        "temp_max": 31.87,
-        "pressure": 1017,
-        "humidity": 46
+        "temp": 21.22,
+        "feels_like": 21.02,
+        "temp_min": 18.93,
+        "temp_max": 23.15,
+        "pressure": 1016,
+        "humidity": 62
     },
+    "visibility": 10000,
     "wind": {
-        "speed": 3.13,
-        "deg": 176,
-        "gust": 5.81
+        "speed": 5.66,
+        "deg": 70,
+        "gust": 9.26
     },
     "clouds": {
-        "all": 97
+        "all": 0
     },
-    "dt": 1656191554,
+    "dt": 1656218369,
     "sys": {
-        "type": 2,
-        "id": 2043365,
+        "type": 1,
+        "id": 718,
         "country": "CA",
-        "sunrise": 1656149827,
-        "sunset": 1656205385
+        "sunrise": 1656236249,
+        "sunset": 1656291788
     },
     "timezone": -14400,
-    "name": "Downtown Toronto"
+    "id": 6167863,
+    "name": "Downtown Toronto",
+    "cod": 200
 }

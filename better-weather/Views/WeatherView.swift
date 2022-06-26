@@ -9,14 +9,25 @@ import SwiftUI
 
 struct WeatherView: View {
     var weatherNow: ResponseBody
+    @EnvironmentObject var appState: AppState
 
-    
+
     var body: some View {
         ZStack(alignment: .leading) {
             VStack {
                 VStack (alignment: .leading, spacing: 5) {
-                    Text(weatherNow.name).bold().font(.title)
-                    Text("Today, \(Date().formatted(.dateTime.month().day().hour().minute()))")
+                    HStack{
+                        Text(weatherNow.name).bold().font(.title)
+                        Spacer()
+                        Button("Today"){
+                            appState.showWeatherHour = true
+                        }
+                        .background(Color(hue: 0.647, saturation: 1.0, brightness: 0.262))
+                        .foregroundColor(.white)
+                        .cornerRadius(10, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                        
+                    }
+                    Text("Now, \(Date().formatted(.dateTime.month().day().hour().minute()))")
                         .fontWeight(.light)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

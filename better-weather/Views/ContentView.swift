@@ -12,6 +12,11 @@ struct ContentView: View {
     var weatherManager = WeatherManager()
     @State var weather: ResponseBody?
     
+    var weatherHourManager = WeatherHourManager()
+    @State var weatherHour: WeatherHourResponseBody?
+    
+    @EnvironmentObject var appState: AppState
+    
     let color: UIColor = UIColor(red: 31/255.0,
                                  green: 31/255.0,
                                  blue: 31/255.0,
@@ -21,7 +26,24 @@ struct ContentView: View {
         VStack {
             if let location = locationManager.location {
                 if let weather = weather {
-                    WeatherView(weatherNow: weather)
+                    if let weatherHour = weatherHour {
+                        if appState.showWeatherHour {
+                            WeatherHourView(weatherHour: weatherHour).environmentObject(appState)
+                        } else {
+                            WeatherView(weatherNow: weather).environmentObject(appState)
+                        }
+                        
+                    } else {
+                        LoadingView().task {
+                            do {
+                                weatherHour = try await weatherHourManager
+                                    .getCurrentWeather(latitude: location.latitude,
+                                                       longitude: location.longitude)
+                            } catch {
+                                print("Error getting weather: \(error)")
+                            }
+                        }
+                    }
                 } else {
                     LoadingView().task {
                         do {
