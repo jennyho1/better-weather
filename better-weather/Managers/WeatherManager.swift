@@ -28,16 +28,13 @@ class WeatherManager {
 
 // Model of the response body we get from calling the OpenWeather API
 struct ResponseBody: Decodable {
-    var coord: CoordinatesResponse
     var weather: [WeatherResponse]
     var main: MainResponse
-    var name: String
     var wind: WindResponse
-
-    struct CoordinatesResponse: Decodable {
-        var lon: Double
-        var lat: Double
-    }
+    var clouds: CloudsResponse
+    var sys: SysResponse
+    var timezone: Int
+    var name: String
 
     struct WeatherResponse: Decodable {
         var id: Double
@@ -59,6 +56,19 @@ struct ResponseBody: Decodable {
         var speed: Double
         var deg: Double
     }
+    
+    struct CloudsResponse: Decodable {
+        var all: Double
+    }
+    
+    struct SysResponse: Decodable {
+        var type: Double
+        var id: Double
+        var country: String
+        var sunrise: Double
+        var sunset: Double
+    }
+    
 }
 
 extension ResponseBody.MainResponse {

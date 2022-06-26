@@ -12,6 +12,15 @@ extension Double {
     func roundDouble() -> String {
         return String(format: "%.0.f", self)
     }
+    
+    func unixToTime(timezone: Int) -> String {
+        let date = Date(timeIntervalSince1970: self)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: timezone)
+        dateFormatter.dateFormat = "HH:mm"
+        let strDate = dateFormatter.string(from: date)
+        return strDate
+    }
 }
 
 // Extension for adding rounded corners to specific corners

@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct WeatherView: View {
-    //var weather: ResponseBody
+    var weatherNow: ResponseBody
 
     
     var body: some View {
         ZStack(alignment: .leading) {
             VStack {
                 VStack (alignment: .leading, spacing: 5) {
-                    Text("Downtown Toronto").bold().font(.title)
+                    Text(weatherNow.name).bold().font(.title)
                     Text("Today, \(Date().formatted(.dateTime.month().day().hour().minute()))")
                         .fontWeight(.light)
                 }
@@ -25,7 +25,7 @@ struct WeatherView: View {
                 
                 VStack {
                     HStack {
-                        Text("26" + "°")
+                        Text(weatherNow.main.temp.roundDouble() + "°")
                             .font(.system(size: 80))
                             .fontWeight(.bold)
                             .padding()
@@ -34,8 +34,8 @@ struct WeatherView: View {
                             Image(systemName: "cloud")
                                 .font(.system(size: 40))
                             VStack {
-                                Text("Clouds")
-                                Text("overcast clouds")
+                                Text(weatherNow.weather[0].main)
+                                Text(weatherNow.weather[0].description)
                             }.frame(width: 150)
                         }.frame(width: 150)
                     }
@@ -58,23 +58,24 @@ struct WeatherView: View {
                             Image(systemName: "sparkles")
                         }
                         
-                        Text("26°")
+                        Text(weatherNow.main.feelsLike.roundDouble() + "°")
                             .bold()
                             .font(.title)
                     }.frame(maxWidth: .infinity)
                     HStack {
                         VStack(alignment: .leading) {
-                            WeatherRow(logo: "thermometer", name: "Min temp", value: "23°", valueSize: 30)
-                            WeatherRow(logo: "sunrise", name: "Sunrise", value: "05:37", valueSize: 30)
-                            WeatherRow(logo: "wind", name: "Wind Speed", value: "1 m/s", valueSize: 30)
-                            WeatherRow(logo: "speedometer", name: "Pressure", value: "1017 hPa", valueSize: 25)
+                            WeatherRow(logo: "thermometer", name: "Min temp", value: "\(weatherNow.main.tempMin.roundDouble())°", valueSize: 25)
+                            
+                            WeatherRow(logo: "sunrise", name: "Sunrise", value: "\(weatherNow.sys.sunrise.unixToTime(timezone: weatherNow.timezone))", valueSize: 25)
+                            WeatherRow(logo: "wind", name: "Wind Speed", value: "\(weatherNow.wind.speed) m/s", valueSize: 25)
+                            WeatherRow(logo: "speedometer", name: "Pressure", value: "\(weatherNow.main.pressure.roundDouble()) hPa", valueSize: 25)
                         }
                         Spacer()
                         VStack(alignment: .leading) {
-                            WeatherRow(logo: "thermometer", name: "Max temp", value: "28°", valueSize: 30)
-                            WeatherRow(logo: "sunset", name: "Sunset", value: "21:03", valueSize: 30)
-                            WeatherRow(logo: "humidity", name: "Humidity", value: "46%", valueSize: 30)
-                            WeatherRow(logo: "cloud", name: "Cloud", value: "94%", valueSize: 30)
+                            WeatherRow(logo: "thermometer", name: "Max temp", value: "\(weatherNow.main.tempMax.roundDouble())°", valueSize: 25)
+                            WeatherRow(logo: "sunset", name: "Sunset", value: "\(weatherNow.sys.sunset.unixToTime(timezone: weatherNow.timezone))", valueSize: 25)
+                            WeatherRow(logo: "humidity", name: "Humidity", value: "\(weatherNow.main.humidity.roundDouble())%", valueSize: 25)
+                            WeatherRow(logo: "cloud", name: "Cloud", value: "\(weatherNow.clouds.all.roundDouble())%", valueSize: 25)
                         }
                     }
                 }
@@ -96,7 +97,6 @@ struct WeatherView: View {
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        //WeatherView(weather: previewWeather)
-        WeatherView()
+        WeatherView(weatherNow: previewWeather)
     }
 }
