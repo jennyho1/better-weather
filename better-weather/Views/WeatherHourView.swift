@@ -10,6 +10,7 @@ import SwiftUICharts
 
 struct WeatherHourView: View {
     var weatherHour: WeatherHourResponseBody
+    var weather: ResponseBody
     @EnvironmentObject var appState: AppState
     
     var body: some View {
@@ -35,7 +36,7 @@ struct WeatherHourView: View {
                 VStack {
                     
                     LineView(data: weatherHour.getFirst8TempData(), title: "Line chart").padding()
-                    HStack{
+                    HStack(spacing: 15){
                         Text(weatherHour.getFirst8TimeData()[0])
                             .font(.footnote)
                         Text(weatherHour.getFirst8TimeData()[1]).font(.footnote)
@@ -53,8 +54,24 @@ struct WeatherHourView: View {
                 .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
                 
                 VStack{
+                    let result = weather.getActivity()
+                    Text(result.1)
+                        .padding()
+                        .background(Color(hue: 0.647, saturation: 1.0, brightness: 0.262))
+                        .cornerRadius(10, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                    AsyncImage(url: URL(string: result.0)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 200)
+                    } placeholder: {
+                        ProgressView()
+                    }
                     
                 }
+                .frame(maxWidth: .infinity, maxHeight: 350)
+                .background(Color.black)
+                .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -68,6 +85,6 @@ struct WeatherHourView: View {
 
 struct WeatherHourView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherHourView(weatherHour: previewWeatherHour)
+        WeatherHourView(weatherHour: previewWeatherHour, weather: previewWeather)
     }
 }

@@ -28,7 +28,7 @@ struct ContentView: View {
                 if let weather = weather {
                     if let weatherHour = weatherHour {
                         if appState.showWeatherHour {
-                            WeatherHourView(weatherHour: weatherHour).environmentObject(appState)
+                            WeatherHourView(weatherHour: weatherHour, weather: weather).environmentObject(appState)
                         } else {
                             WeatherView(weatherNow: weather).environmentObject(appState)
                         }

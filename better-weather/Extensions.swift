@@ -76,4 +76,19 @@ extension WeatherHourResponseBody {
     }
 }
 
+extension ResponseBody {
+    func getActivity() -> (String, String) {
+        
+        if self.main.humidity == 100 {
+            return ("https://cdn.pixabay.com/photo/2017/01/30/14/11/cutter-2020911_1280.png",
+                    "Looks like there's some light rain today. Light rain is beneficial for fishing as it stirs up surface food")
+        } else if 30 < self.clouds.all && self.clouds.all < 70 && self.main.humidity < 50{
+            return ("https://cdn.pixabay.com/photo/2016/11/21/03/56/landscape-1844230_1280.png", "Chances of beautiful sunset today. Medium cloud coverage, low humidity and clean air are indicators of a nice sunset view.")
+        } else if self.main.temp > 25{
+            return ("https://cdn.pixabay.com/photo/2013/07/13/12/18/bathing-159587_1280.png", "Hot sunny day today. Go outside, relax at the beach, remember to wear sunscreen")
+        }
+        return ("https://cdn.pixabay.com/photo/2012/04/01/18/02/camping-23792_1280.png", "Feeling bored? Go camping today. The weather is superb with light breeze and the sun shining.")
+    }
+
+}
 
